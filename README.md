@@ -15,4 +15,11 @@ memoized =
 ```
 
 and later use `Memo.apply memoized 5`, `Memo.apply memoized 35`,
-`Memo.apply memoized 35`, etc.
+`Memo.apply memoized 35`, `Memo.apply memoized 5`, `Memo.apply
+memoized 35`, etc.
+
+No recomputation will take place, i.e., each of `fun 100 5` and `fun
+100 35` will be computed only once. Also, only results that are
+actually needed will be computed, so in the example only `fun 100 5`
+and `fun 100 35` will be computed at all, no `fun 100 1` or any others
+in the range.
