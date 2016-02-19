@@ -18,12 +18,12 @@ type alias Function comparable b =
 {-|
 -}
 apply : Function comparable b -> comparable -> Maybe b
-apply dict arg =
-  Maybe.map Lazy.force (Dict.get arg dict)
+apply dict =
+  \arg -> Maybe.map Lazy.force (Dict.get arg dict)
 
 
 {-|
 -}
 memo : (comparable -> b) -> List comparable -> comparable -> Maybe b
-memo fun =
-  apply << Dict.fromList << List.map (\arg -> ( arg, Lazy.lazy (\() -> fun arg) ))
+memo fun args =
+  apply (Dict.fromList (List.map (\arg -> ( arg, Lazy.lazy (\() -> fun arg) )) args))
