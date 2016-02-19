@@ -9,14 +9,13 @@ function with first argument `100` and second argument either between
 `1` and `10` or between `30` and `40`, you can do:
 
 ```elm
-memoized : Memo.Function Int Bool
+memoized : Int -> Maybe Bool
 memoized =
-  Memo.memo (fun 100) ([1..10] ++ [30..40])
+  memo (fun 100) ([1..10] ++ [30..40])
 ```
 
-and later use `Memo.apply memoized 5`, `Memo.apply memoized 35`,
-`Memo.apply memoized 35`, `Memo.apply memoized 5`, `Memo.apply
-memoized 35`, etc.
+and later use `memoized 5`, `memoized 35`, `memoized 35`, `memoized 5`,
+`memoized 35`, etc.
 
 No recomputation will take place, i.e., each of `fun 100 5` and `fun
 100 35` will be computed only once. Also, only results that are

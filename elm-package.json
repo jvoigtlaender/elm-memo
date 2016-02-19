@@ -1,5 +1,5 @@
 {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "summary": "Most basic memoization functionality",
     "repository": "https://github.com/jvoigtlaender/elm-memo.git",
     "license": "BSD3",
