@@ -22,3 +22,25 @@ No recomputation will take place, i.e., each of `fun 100 5` and `fun
 actually needed will be computed, so in the example only `fun 100 5`
 and `fun 100 35` will be computed at all, no `fun 100 1` or any others
 in the range.
+
+The return value is `Nothing` if the argument provided is not in the
+range declared when `memo` was called. One way for a client of the
+library to handle this case is as follows:
+```elm
+memoFallback : (comparable -> b) -> List comparable -> comparable -> b
+memoFallback fun args =
+  let
+    memoized =
+      memo fun args
+  in
+    \arg ->
+      case memoized arg of
+        Just val ->
+          val
+
+        Nothing ->
+          fun arg
+```
+But other ways are reasonable as well, e.g., replacing `fun arg` in the
+last line by a conscious call to
+[`Debug.crash`](http://package.elm-lang.org/packages/elm-lang/core/latest/Debug#crash).

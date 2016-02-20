@@ -2,6 +2,8 @@ module Memo (memo) where
 
 {-| Most basic memoization functionality.
 
+For documentation, see the [README](..).
+
 @docs memo
 -}
 
