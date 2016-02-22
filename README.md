@@ -41,6 +41,23 @@ memoFallback fun args =
         Nothing ->
           fun arg
 ```
-But other ways are reasonable as well, e.g., replacing `fun arg` in the
-last line by a conscious call to
+But other ways are reasonable as well (depending on scenario), e.g.,
+replacing `fun arg` in the last line by a conscious call to
 [`Debug.crash`](http://package.elm-lang.org/packages/elm-lang/core/latest/Debug#crash).
+
+Here is a fun use of memoization to avoid recursion explosion:
+```elm
+fibonacci : Int -> Int
+fibonacci n =
+  let
+    mfib =
+      memoFallback (\n -> fib n) [2 .. n - 2]
+
+    fib n =
+      if n < 2 then
+        1
+      else
+        mfib (n - 1) + mfib (n - 2)
+  in
+    fib n
+```
