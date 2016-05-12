@@ -1,4 +1,4 @@
-module Memo (memo) where
+module Memo exposing (memo)
 
 {-| Most basic memoization functionality.
 
@@ -14,18 +14,18 @@ import Lazy exposing (Lazy)
 {-|
 -}
 type alias Function comparable b =
-  Dict comparable (Lazy b)
+    Dict comparable (Lazy b)
 
 
 {-|
 -}
 apply : Function comparable b -> comparable -> Maybe b
 apply dict =
-  \arg -> Maybe.map Lazy.force (Dict.get arg dict)
+    \arg -> Maybe.map Lazy.force (Dict.get arg dict)
 
 
 {-|
 -}
 memo : (comparable -> b) -> List comparable -> comparable -> Maybe b
 memo fun args =
-  apply (Dict.fromList (List.map (\arg -> ( arg, Lazy.lazy (\() -> fun arg) )) args))
+    apply (Dict.fromList (List.map (\arg -> ( arg, Lazy.lazy (\() -> fun arg) )) args))

@@ -11,7 +11,7 @@ function with first argument `100` and second argument either between
 ```elm
 memoized : Int -> Maybe Bool
 memoized =
-  memo (fun 100) ([1..10] ++ [30..40])
+    memo (fun 100) ([1..10] ++ [30..40])
 ```
 
 and later use `memoized 5`, `memoized 35`, `memoized 35`, `memoized 5`,
@@ -29,17 +29,17 @@ library to handle this case is as follows:
 ```elm
 memoFallback : (comparable -> b) -> List comparable -> comparable -> b
 memoFallback fun args =
-  let
-    memoized =
-      memo fun args
-  in
-    \arg ->
-      case memoized arg of
-        Just val ->
-          val
+    let
+        memoized =
+            memo fun args
+    in
+        \arg ->
+            case memoized arg of
+                Just val ->
+                    val
 
-        Nothing ->
-          fun arg
+                Nothing ->
+                    fun arg
 ```
 But other ways are reasonable as well (depending on scenario), e.g.,
 replacing `fun arg` in the last line by a conscious call to
@@ -49,15 +49,15 @@ Here is a fun use of memoization to avoid recursion explosion:
 ```elm
 fibonacci : Int -> Int
 fibonacci n =
-  let
-    mfib =
-      memoFallback (\n -> fib n) [2 .. n - 2]
+    let
+        mfib =
+            memoFallback fib [2..n - 2]
 
-    fib n =
-      if n < 2 then
-        1
-      else
-        mfib (n - 1) + mfib (n - 2)
-  in
-    fib n
+        fib n =
+            if n < 2 then
+                1
+            else
+                mfib (n - 1) + mfib (n - 2)
+    in
+        fib n
 ```
