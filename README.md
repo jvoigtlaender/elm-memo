@@ -11,7 +11,7 @@ function with first argument `100` and second argument either between
 ```elm
 memoized : Int -> Maybe Bool
 memoized =
-    memo (fun 100) ([1..10] ++ [30..40])
+    memo (fun 100) (List.range 1 10 ++ List.range 30 40)
 ```
 
 and later use `memoized 5`, `memoized 35`, `memoized 35`, `memoized 5`,
@@ -51,7 +51,7 @@ fibonacci : Int -> Int
 fibonacci n =
     let
         mfib =
-            memoFallback fib [2..n - 2]
+            memoFallback fib (List.range 2 (n - 2))
 
         fib n =
             if n < 2 then
